@@ -1,0 +1,9 @@
+tab:unnamed-chunk-17
+welcome-to-dmml-lab-1
+exercise-1-tasks-in-lecture-notes
+exercise-2-employment-in-europe
+optional-implementing-pca-using-prcomp
+solution
+exercise-1
+exercise-2
+optional-implementing-pca-using-prcomp-1

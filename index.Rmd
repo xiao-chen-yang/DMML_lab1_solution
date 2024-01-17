@@ -1,0 +1,47 @@
+---
+title: "STATS5099 Data Mining and Machine Learning"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+library(webexercises)
+library(tinytex)
+library(dplyr)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+
+options(digits=4)
+```
+
+
+```{r include=FALSE, echo=FALSE}
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Welcome to DMML Lab 1
+
+In week 1, we have studied how to use principal component analysis (PCA) to perform dimension reduction. 
+
+Before implementing PCA, we should always check that the variables are continuous and perform some exploratory analysis. Some useful codes include:
+
+```{r echo=TRUE, eval=FALSE}
+str, summary, skim, cor #for numerical summaries
+plot, pairs #for graphical summaries
+```
+
+Next, we perform PCA by using the command `princomp`. If the variables have been recorded on different scales or they have very different variances, then it is advisable to base the analysis on the sample correlation matrix; in this case, we set the second argument `cor` to `TRUE`. Otherwise, covariance matrix is preferred (no need to include the second argument).
+```{r echo=TRUE, eval=FALSE}
+my.pca <- princomp(my.data) #covariance-based PCA
+my.pca <- princomp(my.data, cor=TRUE) #covariance-based PCA
+```
+
+To determine the number of principal components to be retained, we could use Proportion of Variation, Kaiser's method and Cattell's method. The former two methods require the standard deviation of each principal component, which can be found by using `summary(my.pca)` or `my.pca$sdev`. The last method requires a scree plot, which can be produced by using `plot(my.pca)`. 
+
+Finally, once PCA is performed, we can interpret the principal components by looking at the loadings (`my.pca$loadings`). Observations in the new PC coordinate system, i.e. scores, are stored in `my.pca$scores`. A new observation can be projected into the PC space by using `predict(my.pca, new.data)`.

@@ -1,0 +1,178 @@
+# Solution
+
+## Exercise 1
+
+Task 2. Looking at the Cumulative Proportion line we see:
+
+- for 80\% we would only need 5 components
+
+- for 95\% we would need 10 components.
+
+Task 3. According to the new rule, we would obtain 6 components.
+
+```{r}
+wine.pca$sdevˆ2>0.6
+```
+
+Task 4. Although there are a large number of positive and negative non-zero loadings, the really dominant ones in terms of size (approximately 0.6) are ash and alcalinity of ash, so this component mainly seems to be interested in ash and its properties in wine.
+
+Task 5. To calculate the first component score
+
+```{r}
+#By hand using R as a calculator
+new.x<-matrix(c(12,4,3,25,100,2,1,0.4,2,4,1,2,600),nrow=1)
+colnames(new.x)<-colnames(wine.new)
+centre.wine<-wine.pca$center
+scale.wine<-wine.pca$scale
+first.load<-wine.pca$loadings[,1]
+
+new.x.cent<-new.x-centre.wine
+new.x.stand<-new.x.cent/scale.wine
+new.x.stand%*%first.load
+
+#Using the predict command
+predict(wine.pca,as.data.frame(new.x))
+```
+We can see the answer by hand is the same as the first element of the `predict` result. If we were using PCA on the covariance matrix, we would skip the scaling stage (only centering before taking the inner product).
+
+
+## Exercise 2
+
+1. The following codes produce some numerical summaries.
+
+```{r echo=TRUE, warning=FALSE}
+# summary(employ)
+library(skimr);library(knitr)
+my_skim <- skim_with(base = sfl(n = length), numeric = sfl(p0 = NULL, p100 = NULL,
+hist = NULL))
+knit_print(my_skim(employ))
+```
+Comment: All variables are continuous variables, so it is suitable to apply PCA. The standard deviation vary across variables, which suggest that we should use the correlation matrix in PCA (This will be formally checked shortly). 
+
+The next step of exploratory analysis is to produce some graphical summaries. Here we could use the pairs plot in R.
+```{r  fig.align='center'}
+#Look at the pairs plots for the data
+pairs(employ,pch=20, lower.panel=NULL)
+```
+
+Comment: There are a couple of possible outliers. (We'll leave these for the moment and see if they appear again in our scores plot in the end for whether we need to re-run PCA without them included.) The data doesn't appear to fall into groups. There seem to be some linear relationships between pairs of variables but they are not very strong.
+
+
+2. It's important to have a look at the correlation and variance of the variables.
+
+```{r echo=TRUE}
+#Display the correlation matrix to 2 d.p.s
+#library(matrixcalc)
+round(cor(employ),2)
+#Look at the standard deviations of the variables
+round(sqrt(diag(cov(employ))),1)
+```
+
+Comment: There are some strong correlation (around -0.7) but a lot of weak (close to zero) correlations as well. It may be possible to achieve some dimension reduction here but not a lot. The variation for some variables is much bigger than for others, therefore we should use the correlation matrix and *not* the covariance matrix in PCA.
+
+
+3. We should use `princomp` with the argument `cor=T` to perform PCA on the correlation matrix.
+
+```{r}
+employ.pca<-princomp(employ,cor=T)
+employ.pca
+```
+
+The `summary` function can give us information about how many components we should keep.
+```{r}
+summary(employ.pca)
+```
+
+
+4. Looking at the Cumulative Proportion line, it is clear that we need to keep 5 components to retain 90\% variability.
+
+5. For Cattell's method we will need to produce a scree plot.
+
+```{r fig.height=3.7, fig.width=6.5, fig.align='center'}
+plot(employ.pca)
+```
+
+There are some different possibilities here, depending on how you read the graph. Suggesting 2, 4 or 6 components seems reasonable as that's where we see sudden drops/leveling off in variation.
+
+6. For Kaiser's method we need to look at finding the average eigenvalue to discover which set of components have variation above it that we will retain.
+
+```{r}
+employ.pca$sdev^2>1
+```
+
+Here we have cheated a bit, since we know the average variance is going to be $1$ whenever we use the correlation matrix. We can see that we would retain the first $3$ components in this case.
+
+
+7. To interpret principal components, we look at the loadings from each component.
+```{r}
+employ.pca$loadings
+```
+
+- Component $1$ seems to be the difference between the average of manufacturing, power, construction, service, social and transporation industries, and the agricultural industry. So this new variable will distinguish between countries with agricultural economies and those with industrial economies.
+
+- Component $2$ seems to be the difference between the average of mining, manufacturing, power and transportation industries, and the average of service, finance and social industries. So this new variable distinguishes between contries with relatively large and relatively small service sectors.
+
+8. The scatterplot of scores for the first $2$ PCs is produced as follows. 
+```{r fig.height=4, fig.width=6}
+employ.scores2<-as.data.frame(employ.pca$scores[,1:2])
+plot(employ.scores2$Comp.1,employ.scores2$Comp.2,xlab="Comp.1", ylab="Comp.2")
+```
+
+There definitely seems to be an issue with at least one outlier. It would be worth identifying and removing it/them and re-running PCA to see if it affects the results.
+
+9. 
+We can calculate the scores using the following code
+
+```{r}
+#By hand using R as a calculator
+centre.employ<-employ.pca$center
+scale.employ<-employ.pca$scale
+second.load<-employ.pca$loadings[,2]
+
+obs1.cent<-obs1-centre.employ
+obs1.stand<-obs1.cent/scale.employ
+obs1.stand%*%second.load
+
+obs2.cent<-obs2-centre.employ
+obs2.stand<-obs2.cent/scale.employ
+obs2.stand%*%second.load
+
+#Using the predict command
+newdata<-rbind(obs1,obs2);colnames(newdata)<-colnames(employ)
+new.data<-as.data.frame(newdata);
+new.data.scores<-predict(employ.pca,new.data)
+new.data.scores[, 1:6]
+```
+
+## Optional: Implementing PCA using `prcomp`
+The following code uses `prcomp` to analyse the turtle data.
+
+```{r echo=TRUE,eval=FALSE}
+#Setting the random generator seed to ensure similar responses when re-running code
+set.seed(135)
+
+#############################
+#Principal Component Analysis
+#############################
+pca.turt.2<-prcomp(log.fem.turt[-10,]);pca.turt.2
+
+####################################
+#Deciding on number of PCs to retain
+####################################
+plot(pca.turt.2);summary(pca.turt.2)
+sd.pca<-summary(pca.turt.2)$sdev
+tot.var<-sum(sd.pca^2)
+ave.var<-tot.var/ncol(log.fem.turt)
+ave.var
+sd.pca^2>ave.var
+
+#######################################IT##############
+#Interpreting the loadings and calculating new scores
+#####################################################
+pca.turt.2$rotation #loading matrix
+# pca.turt.2$x #PC scores
+new.data<-data.frame(log.length=c(4.8),log.width=c(4.7),log.breadth=c(3.9))
+predict(pca.turt.2,new.data)
+```
+
+The PCA results using `princomp` and `prcomp` are not *too* different.

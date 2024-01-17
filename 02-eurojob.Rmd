@@ -1,0 +1,85 @@
+# Exercise 2: Employment in Europe
+
+In this example we are going to look at a data set on employment in 26 European countries and perform PCA. 
+
+The data gives for each of 26 European countries the percentage of the total workforce employed in nine different industries in 1979 (Hand et al, 1994).
+
+Variable name   | Description
+--------------- | ------------------------------------------
+ Agriculture    | % employed in agriculture
+ Mining         | % employed in mining
+ Manufacture    | % employed in manufacturing
+ Power          | % employed in power supply industries
+ Construction   | % employed in construction
+ Service        | % employed in service industries
+ Finance        | % employed in finance
+ Social         | % employed in social and personal services
+ Transport      | % employed in transport & communications
+
+```{r echo=TRUE}
+employ<-read.table("eurojob.txt",header=T,row.names=1);head(employ,4)
+```
+
+**Task**
+
+1. Perform exploratory data analysis (i.e. numerical summaries and some sensible plots) for these data. Comment on the results. 
+
+`r hide("Hint")`
+For numerical summaries, you could use `summary` or `skim`. For plots, you could use `pairs`.
+`r unhide()`
+
+2. Produce two important numerical summaries for deciding on how to run PCA and to tell how successful it is likely to be. Comment on these.
+
+`r hide("Hint")`
+Think about which statistics you will need in order to decide whether PCA might useful for this data, and whether to use covariance-based PCA or correlation-based PCA. 
+`r unhide()`
+
+3. Run PCA on the appropriate matrix and look at the output.
+
+`r hide("Hint")`
+Use the `princomp` command to implement PCA.
+`r unhide()`
+
+4. Assuming we are most concerned with preserving information, how many coefficients should we retain if we want to have 90\% of the original variability kept?
+
+Answer: `r fitb(5)` components
+
+5. Assuming we want to use Cattell's method, how many components would we retain?
+
+`r hide("Hint")`
+Use `plot` on your PCA model to produce a scree plot and look for the bend/elbow. 
+`r unhide()`
+
+Answer: `r fitb(c(2,4,6))` components
+
+6. Assuming we want to use Kaiser's method, how many components would we retain?
+
+Answer: `r fitb(3)` components
+
+7. Assuming we have decided to retain 2 components, is there any useful interpretation to be had for these?
+
+`r hide("Hint")`
+Look at the loadings by using `$loadings`.
+`r unhide()`
+
+8. Produce a scatterplot of the data's scores for the first $2$ PCs and comment.
+
+`r hide("Hint")``
+PC scores are stored in `$scores` and a scatterplot can be produced by using `plot`. 
+`r unhide()`
+
+9. Say we have the following two new observations. 
+
+```{r}
+obs1<-c(5.1,0.5,32.3,0.8,8.1,16.7,4.3,21.2,6.3)
+obs2<-c(4.2,0.7,25.4,0.7,9.3,15.0,5.8,31.0,6.9)
+```
+
+Calculate their scores on the second principal component. 
+
+Answer: The second component score for `obs1` is `r fitb(c(-0.7608272,-0.760827,-0.76083,-0.7608,-0.761,-0.76))` and the second component score for `obs2` is `r fitb(c(-1.3729179,-1.372918,-1.37292,-1.3729,-1.373,-1.37))`.
+
+`r hide("Hint")`
+You will need to mean-centre and standardise both observations first and then multiply them by the second PC loadings.
+`r unhide()`
+

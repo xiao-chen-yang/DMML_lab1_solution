@@ -1,0 +1,64 @@
+# Exercise 1: Tasks in lecture notes
+
+In the lecture note, we looked at the wines dataset and explained how to apply PCA to it. You may re-run the following codes to import the data and perform PCA.
+
+```{r}
+wine <- read.csv("wine.data.csv")
+wine.new<-wine[-122,-1]
+wine.pca<-princomp(wine.new, cor=T)
+summary(wine.pca)
+```
+
+**Task 2** (in the lecture note)
+
+How many components should we have chosen if we wanted 80\% of the original variability explained? 
+
+Answer: `r fitb(5)` components
+
+What about 95\%?
+
+Answer: `r fitb(10)` components
+
+**Task 3**
+
+Some social scientists use Joliffe’s rule, which says that for a PCA run on correlation, only those PCs with variation above 0.6 should be retained. How many PCs should be retained according to this rule?
+
+Answer: `r fitb(6)` components
+
+`r hide("Hint")`
+Use `wine.pca$sdev` to find the standard deviation and thus the variance of each PC. 
+`r unhide()`
+
+`r hide("Solution")`
+```{r}
+wine.pca$sdevˆ2>0.6
+```
+Since there are six TRUE values, we select six components.
+`r unhide()`
+
+**Task 4**
+
+Looking at the loadings of the PCA, how would you interpret the third principal component? 
+
+```{r}
+wine.pca$loadings[,1:6]
+```
+
+**Task 5**
+
+(i) Calculate the first component score for the new observation $(12,4,3,25,100,2,1,0.4,2,4,1,2,600)$ by hand (using R as a calculator)
+
+Answer: The first component score for the new observation is `r fitb(c(-1.852166,-1.85217,-1.8522,-1.852,-1.85,-1.9))`.
+
+`r hide("Hint")`
+Step 1. `princomp` automatically mean-centres each variable. Therefore, you will have to centre the new observation by taking away the centre vector; the centring vector is stored in `wine.pca$center`. 
+
+Step 2. Since we used the correlation matrix and so we were working with standardised data, you will have to scale the resulting centred vector by dividing by the scale vector; the scale vector is stored in `wine.pca$scale`. 
+
+Step 3. According to the definition, (PC) scores are the inner product of the new observation (after mean-centring and standardisation) and the first principal component loading vector; the 1st PC loadings are stored in `wine.pca$loadings[,1]`.
+`r unhide()`
+
+(ii) Calculate the first component score for the new observation $(12,4,3,25,100,2,1,0.4,2,4,1,2,600)$ by using the `predict` command. 
+
+Answer: The first component score for the new observation is `r fitb(c(-1.852166,-1.85217,-1.8522,-1.852,-1.85,-1.9))`.
+
