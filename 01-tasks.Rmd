@@ -19,6 +19,10 @@ What about 95\%?
 
 Answer: `r fitb(10)` components
 
+`r hide("Hint")`
+Look at the row "Cumulative Proportion" and find the column whose value is larger than the required proportion of variance explained. 
+`r unhide()`
+
 **Task 3**
 
 Some social scientists use Joliffe’s rule, which says that for a PCA run on correlation, only those PCs with variation above 0.6 should be retained. How many PCs should be retained according to this rule?
@@ -29,20 +33,9 @@ Answer: `r fitb(6)` components
 Use `wine.pca$sdev` to find the standard deviation and thus the variance of each PC. 
 `r unhide()`
 
-`r hide("Solution")`
-```{r}
-wine.pca$sdevˆ2>0.6
-```
-Since there are six TRUE values, we select six components.
-`r unhide()`
-
 **Task 4**
 
 Looking at the loadings of the PCA, how would you interpret the third principal component? 
-
-```{r}
-wine.pca$loadings[,1:6]
-```
 
 **Task 5**
 

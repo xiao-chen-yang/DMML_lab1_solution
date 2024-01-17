@@ -213,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exercise-2-employment-in-europe.html#cb9-1" tabindex="-1"></a>employ<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;eurojob.txt&quot;</span>,<span class="at">header=</span>T,<span class="at">row.names=</span><span class="dv">1</span>);<span class="fu">head</span>(employ,<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="exercise-2-employment-in-europe.html#cb5-1" tabindex="-1"></a>employ<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;eurojob.txt&quot;</span>,<span class="at">header=</span>T,<span class="at">row.names=</span><span class="dv">1</span>);<span class="fu">head</span>(employ,<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>##         AGRIC MINING MANU POWER CONSTR SERVICE FINANCE SOCIAL TRANS
 ## Belgium   3.3    0.9 27.6   0.9    8.2    19.1     6.2   26.6   7.2
 ## Denmark   9.2    0.1 21.8   0.6    8.3    14.6     6.5   32.2   7.1
@@ -286,8 +286,8 @@ Hint
 <ol start="9" style="list-style-type: decimal">
 <li>Say we have the following two new observations.</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="exercise-2-employment-in-europe.html#cb11-1" tabindex="-1"></a>obs1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">0.5</span>,<span class="fl">32.3</span>,<span class="fl">0.8</span>,<span class="fl">8.1</span>,<span class="fl">16.7</span>,<span class="fl">4.3</span>,<span class="fl">21.2</span>,<span class="fl">6.3</span>)</span>
-<span id="cb11-2"><a href="exercise-2-employment-in-europe.html#cb11-2" tabindex="-1"></a>obs2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">4.2</span>,<span class="fl">0.7</span>,<span class="fl">25.4</span>,<span class="fl">0.7</span>,<span class="fl">9.3</span>,<span class="fl">15.0</span>,<span class="fl">5.8</span>,<span class="fl">31.0</span>,<span class="fl">6.9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exercise-2-employment-in-europe.html#cb7-1" tabindex="-1"></a>obs1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">0.5</span>,<span class="fl">32.3</span>,<span class="fl">0.8</span>,<span class="fl">8.1</span>,<span class="fl">16.7</span>,<span class="fl">4.3</span>,<span class="fl">21.2</span>,<span class="fl">6.3</span>)</span>
+<span id="cb7-2"><a href="exercise-2-employment-in-europe.html#cb7-2" tabindex="-1"></a>obs2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">4.2</span>,<span class="fl">0.7</span>,<span class="fl">25.4</span>,<span class="fl">0.7</span>,<span class="fl">9.3</span>,<span class="fl">15.0</span>,<span class="fl">5.8</span>,<span class="fl">31.0</span>,<span class="fl">6.9</span>)</span></code></pre></div>
 <p>Calculate their scores on the second principal component.</p>
 <p>Answer: The second component score for <code>obs1</code> is <input class='webex-solveme nospaces' size='10' data-answer='["-0.7608272","-0.760827","-0.76083","-0.7608","-0.761","-0.76","-.7608272","-.760827","-.76083","-.7608","-.761","-.76"]'/> and the second component score for <code>obs2</code> is <input class='webex-solveme nospaces' size='10' data-answer='["-1.3729179","-1.372918","-1.37292","-1.3729","-1.373","-1.37"]'/>.</p>
 <div class="webex-solution">

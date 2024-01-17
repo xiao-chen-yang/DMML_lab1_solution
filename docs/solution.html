@@ -173,24 +173,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>for 95% we would need 10 components.</p></li>
 </ul>
 <p>Task 3. According to the new rule, we would obtain 6 components.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="solution.html#cb13-1" tabindex="-1"></a>wine.pca<span class="sc">$</span>sdevˆ2<span class="sc">&gt;</span><span class="fl">0.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="solution.html#cb9-1" tabindex="-1"></a>wine.pca<span class="sc">$</span>sdevˆ2<span class="sc">&gt;</span><span class="fl">0.6</span></span></code></pre></div>
 <pre><code>## logical(0)</code></pre>
 <p>Task 4. Although there are a large number of positive and negative non-zero loadings, the really dominant ones in terms of size (approximately 0.6) are ash and alcalinity of ash, so this component mainly seems to be interested in ash and its properties in wine.</p>
 <p>Task 5. To calculate the first component score</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="solution.html#cb15-1" tabindex="-1"></a><span class="co">#By hand using R as a calculator</span></span>
-<span id="cb15-2"><a href="solution.html#cb15-2" tabindex="-1"></a>new.x<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">25</span>,<span class="dv">100</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.4</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">600</span>),<span class="at">nrow=</span><span class="dv">1</span>)</span>
-<span id="cb15-3"><a href="solution.html#cb15-3" tabindex="-1"></a><span class="fu">colnames</span>(new.x)<span class="ot">&lt;-</span><span class="fu">colnames</span>(wine.new)</span>
-<span id="cb15-4"><a href="solution.html#cb15-4" tabindex="-1"></a>centre.wine<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>center</span>
-<span id="cb15-5"><a href="solution.html#cb15-5" tabindex="-1"></a>scale.wine<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>scale</span>
-<span id="cb15-6"><a href="solution.html#cb15-6" tabindex="-1"></a>first.load<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>loadings[,<span class="dv">1</span>]</span>
-<span id="cb15-7"><a href="solution.html#cb15-7" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="solution.html#cb15-8" tabindex="-1"></a>new.x.cent<span class="ot">&lt;-</span>new.x<span class="sc">-</span>centre.wine</span>
-<span id="cb15-9"><a href="solution.html#cb15-9" tabindex="-1"></a>new.x.stand<span class="ot">&lt;-</span>new.x.cent<span class="sc">/</span>scale.wine</span>
-<span id="cb15-10"><a href="solution.html#cb15-10" tabindex="-1"></a>new.x.stand<span class="sc">%*%</span>first.load</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="solution.html#cb11-1" tabindex="-1"></a><span class="co">#By hand using R as a calculator</span></span>
+<span id="cb11-2"><a href="solution.html#cb11-2" tabindex="-1"></a>new.x<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">25</span>,<span class="dv">100</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.4</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">600</span>),<span class="at">nrow=</span><span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="solution.html#cb11-3" tabindex="-1"></a><span class="fu">colnames</span>(new.x)<span class="ot">&lt;-</span><span class="fu">colnames</span>(wine.new)</span>
+<span id="cb11-4"><a href="solution.html#cb11-4" tabindex="-1"></a>centre.wine<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>center</span>
+<span id="cb11-5"><a href="solution.html#cb11-5" tabindex="-1"></a>scale.wine<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>scale</span>
+<span id="cb11-6"><a href="solution.html#cb11-6" tabindex="-1"></a>first.load<span class="ot">&lt;-</span>wine.pca<span class="sc">$</span>loadings[,<span class="dv">1</span>]</span>
+<span id="cb11-7"><a href="solution.html#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="solution.html#cb11-8" tabindex="-1"></a>new.x.cent<span class="ot">&lt;-</span>new.x<span class="sc">-</span>centre.wine</span>
+<span id="cb11-9"><a href="solution.html#cb11-9" tabindex="-1"></a>new.x.stand<span class="ot">&lt;-</span>new.x.cent<span class="sc">/</span>scale.wine</span>
+<span id="cb11-10"><a href="solution.html#cb11-10" tabindex="-1"></a>new.x.stand<span class="sc">%*%</span>first.load</span></code></pre></div>
 <pre><code>##        [,1]
 ## [1,] -1.852</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="solution.html#cb17-1" tabindex="-1"></a><span class="co">#Using the predict command</span></span>
-<span id="cb17-2"><a href="solution.html#cb17-2" tabindex="-1"></a><span class="fu">predict</span>(wine.pca,<span class="fu">as.data.frame</span>(new.x))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="solution.html#cb13-1" tabindex="-1"></a><span class="co">#Using the predict command</span></span>
+<span id="cb13-2"><a href="solution.html#cb13-2" tabindex="-1"></a><span class="fu">predict</span>(wine.pca,<span class="fu">as.data.frame</span>(new.x))</span></code></pre></div>
 <pre><code>##      Comp.1 Comp.2 Comp.3  Comp.4  Comp.5 Comp.6  Comp.7 Comp.8 Comp.9 Comp.10
 ## [1,] -1.852 0.1965  -2.91 -0.2902 -0.5356  0.105 -0.4886 0.1793 -1.297 -0.7005
 ##      Comp.11 Comp.12 Comp.13
@@ -202,13 +202,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>The following codes produce some numerical summaries.</li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="solution.html#cb19-1" tabindex="-1"></a><span class="co"># summary(employ)</span></span>
-<span id="cb19-2"><a href="solution.html#cb19-2" tabindex="-1"></a><span class="fu">library</span>(skimr);<span class="fu">library</span>(knitr)</span>
-<span id="cb19-3"><a href="solution.html#cb19-3" tabindex="-1"></a>my_skim <span class="ot">&lt;-</span> <span class="fu">skim_with</span>(<span class="at">base =</span> <span class="fu">sfl</span>(<span class="at">n =</span> length), <span class="at">numeric =</span> <span class="fu">sfl</span>(<span class="at">p0 =</span> <span class="cn">NULL</span>, <span class="at">p100 =</span> <span class="cn">NULL</span>,</span>
-<span id="cb19-4"><a href="solution.html#cb19-4" tabindex="-1"></a><span class="at">hist =</span> <span class="cn">NULL</span>))</span>
-<span id="cb19-5"><a href="solution.html#cb19-5" tabindex="-1"></a><span class="fu">knit_print</span>(<span class="fu">my_skim</span>(employ))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="solution.html#cb15-1" tabindex="-1"></a><span class="co"># summary(employ)</span></span>
+<span id="cb15-2"><a href="solution.html#cb15-2" tabindex="-1"></a><span class="fu">library</span>(skimr);<span class="fu">library</span>(knitr)</span>
+<span id="cb15-3"><a href="solution.html#cb15-3" tabindex="-1"></a>my_skim <span class="ot">&lt;-</span> <span class="fu">skim_with</span>(<span class="at">base =</span> <span class="fu">sfl</span>(<span class="at">n =</span> length), <span class="at">numeric =</span> <span class="fu">sfl</span>(<span class="at">p0 =</span> <span class="cn">NULL</span>, <span class="at">p100 =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-4"><a href="solution.html#cb15-4" tabindex="-1"></a><span class="at">hist =</span> <span class="cn">NULL</span>))</span>
+<span id="cb15-5"><a href="solution.html#cb15-5" tabindex="-1"></a><span class="fu">knit_print</span>(<span class="fu">my_skim</span>(employ))</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-17">Table 5.1: </span>Data summary</caption>
+<caption><span id="tab:unnamed-chunk-15">Table 5.1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -343,16 +343,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>Comment: All variables are continuous variables, so it is suitable to apply PCA. The standard deviation vary across variables, which suggest that we should use the correlation matrix in PCA (This will be formally checked shortly).</p>
 <p>The next step of exploratory analysis is to produce some graphical summaries. Here we could use the pairs plot in R.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="solution.html#cb20-1" tabindex="-1"></a><span class="co">#Look at the pairs plots for the data</span></span>
-<span id="cb20-2"><a href="solution.html#cb20-2" tabindex="-1"></a><span class="fu">pairs</span>(employ,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">lower.panel=</span><span class="cn">NULL</span>)</span></code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="solution.html#cb16-1" tabindex="-1"></a><span class="co">#Look at the pairs plots for the data</span></span>
+<span id="cb16-2"><a href="solution.html#cb16-2" tabindex="-1"></a><span class="fu">pairs</span>(employ,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">lower.panel=</span><span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Comment: There are a couple of possible outliers. (We'll leave these for the moment and see if they appear again in our scores plot in the end for whether we need to re-run PCA without them included.) The data doesn't appear to fall into groups. There seem to be some linear relationships between pairs of variables but they are not very strong.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>It's important to have a look at the correlation and variance of the variables.</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="solution.html#cb21-1" tabindex="-1"></a><span class="co">#Display the correlation matrix to 2 d.p.s</span></span>
-<span id="cb21-2"><a href="solution.html#cb21-2" tabindex="-1"></a><span class="co">#library(matrixcalc)</span></span>
-<span id="cb21-3"><a href="solution.html#cb21-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(employ),<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="solution.html#cb17-1" tabindex="-1"></a><span class="co">#Display the correlation matrix to 2 d.p.s</span></span>
+<span id="cb17-2"><a href="solution.html#cb17-2" tabindex="-1"></a><span class="co">#library(matrixcalc)</span></span>
+<span id="cb17-3"><a href="solution.html#cb17-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(employ),<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##         AGRIC MINING  MANU POWER CONSTR SERVICE FINANCE SOCIAL TRANS
 ## AGRIC    1.00   0.04 -0.67 -0.40  -0.54   -0.74   -0.22  -0.75 -0.56
 ## MINING   0.04   1.00  0.45  0.41  -0.03   -0.40   -0.44  -0.28  0.16
@@ -363,16 +363,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## FINANCE -0.22  -0.44 -0.16  0.11   0.02    0.37    1.00   0.11 -0.25
 ## SOCIAL  -0.75  -0.28  0.15  0.13   0.16    0.57    0.11   1.00  0.57
 ## TRANS   -0.56   0.16  0.35  0.38   0.39    0.19   -0.25   0.57  1.00</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="solution.html#cb23-1" tabindex="-1"></a><span class="co">#Look at the standard deviations of the variables</span></span>
-<span id="cb23-2"><a href="solution.html#cb23-2" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">cov</span>(employ))),<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="solution.html#cb19-1" tabindex="-1"></a><span class="co">#Look at the standard deviations of the variables</span></span>
+<span id="cb19-2"><a href="solution.html#cb19-2" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">cov</span>(employ))),<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>##   AGRIC  MINING    MANU   POWER  CONSTR SERVICE FINANCE  SOCIAL   TRANS 
 ##    15.5     1.0     7.0     0.4     1.6     4.6     2.8     6.8     1.4</code></pre>
 <p>Comment: There are some strong correlation (around -0.7) but a lot of weak (close to zero) correlations as well. It may be possible to achieve some dimension reduction here but not a lot. The variation for some variables is much bigger than for others, therefore we should use the correlation matrix and <em>not</em> the covariance matrix in PCA.</p>
 <ol start="3" style="list-style-type: decimal">
 <li>We should use <code>princomp</code> with the argument <code>cor=T</code> to perform PCA on the correlation matrix.</li>
 </ol>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="solution.html#cb25-1" tabindex="-1"></a>employ.pca<span class="ot">&lt;-</span><span class="fu">princomp</span>(employ,<span class="at">cor=</span>T)</span>
-<span id="cb25-2"><a href="solution.html#cb25-2" tabindex="-1"></a>employ.pca</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="solution.html#cb21-1" tabindex="-1"></a>employ.pca<span class="ot">&lt;-</span><span class="fu">princomp</span>(employ,<span class="at">cor=</span>T)</span>
+<span id="cb21-2"><a href="solution.html#cb21-2" tabindex="-1"></a>employ.pca</span></code></pre></div>
 <pre><code>## Call:
 ## princomp(x = employ, cor = T)
 ## 
@@ -384,7 +384,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##  9  variables and  26 observations.</code></pre>
 <p>The <code>summary</code> function can give us information about how many components we should keep.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="solution.html#cb27-1" tabindex="-1"></a><span class="fu">summary</span>(employ.pca)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="solution.html#cb23-1" tabindex="-1"></a><span class="fu">summary</span>(employ.pca)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                        Comp.1 Comp.2 Comp.3 Comp.4  Comp.5 Comp.6  Comp.7
 ## Standard deviation     1.8674 1.4595 1.0483 0.9972 0.73703 0.6192 0.47514
@@ -398,20 +398,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Looking at the Cumulative Proportion line, it is clear that we need to keep 5 components to retain 90% variability.</p></li>
 <li><p>For Cattell's method we will need to produce a scree plot.</p></li>
 </ol>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="solution.html#cb29-1" tabindex="-1"></a><span class="fu">plot</span>(employ.pca)</span></code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-22-1.png" width="624" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="solution.html#cb25-1" tabindex="-1"></a><span class="fu">plot</span>(employ.pca)</span></code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-20-1.png" width="624" style="display: block; margin: auto;" /></p>
 <p>There are some different possibilities here, depending on how you read the graph. Suggesting 2, 4 or 6 components seems reasonable as that's where we see sudden drops/leveling off in variation.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>For Kaiser's method we need to look at finding the average eigenvalue to discover which set of components have variation above it that we will retain.</li>
 </ol>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="solution.html#cb30-1" tabindex="-1"></a>employ.pca<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span><span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="solution.html#cb26-1" tabindex="-1"></a>employ.pca<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span><span class="dv">1</span></span></code></pre></div>
 <pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9 
 ##   TRUE   TRUE   TRUE  FALSE  FALSE  FALSE  FALSE  FALSE  FALSE</code></pre>
 <p>Here we have cheated a bit, since we know the average variance is going to be <span class="math inline">\(1\)</span> whenever we use the correlation matrix. We can see that we would retain the first <span class="math inline">\(3\)</span> components in this case.</p>
 <ol start="7" style="list-style-type: decimal">
 <li>To interpret principal components, we look at the loadings from each component.</li>
 </ol>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="solution.html#cb32-1" tabindex="-1"></a>employ.pca<span class="sc">$</span>loadings</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="solution.html#cb28-1" tabindex="-1"></a>employ.pca<span class="sc">$</span>loadings</span></code></pre></div>
 <pre><code>## 
 ## Loadings:
 ##         Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9
@@ -436,33 +436,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="8" style="list-style-type: decimal">
 <li>The scatterplot of scores for the first <span class="math inline">\(2\)</span> PCs is produced as follows.</li>
 </ol>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="solution.html#cb34-1" tabindex="-1"></a>employ.scores2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(employ.pca<span class="sc">$</span>scores[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="cb34-2"><a href="solution.html#cb34-2" tabindex="-1"></a><span class="fu">plot</span>(employ.scores2<span class="sc">$</span>Comp<span class="fl">.1</span>,employ.scores2<span class="sc">$</span>Comp<span class="fl">.2</span>,<span class="at">xlab=</span><span class="st">&quot;Comp.1&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Comp.2&quot;</span>)</span></code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-25-1.png" width="576" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="solution.html#cb30-1" tabindex="-1"></a>employ.scores2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(employ.pca<span class="sc">$</span>scores[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb30-2"><a href="solution.html#cb30-2" tabindex="-1"></a><span class="fu">plot</span>(employ.scores2<span class="sc">$</span>Comp<span class="fl">.1</span>,employ.scores2<span class="sc">$</span>Comp<span class="fl">.2</span>,<span class="at">xlab=</span><span class="st">&quot;Comp.1&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Comp.2&quot;</span>)</span></code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
 <p>There definitely seems to be an issue with at least one outlier. It would be worth identifying and removing it/them and re-running PCA to see if it affects the results.</p>
 <ol start="9" style="list-style-type: decimal">
 <li>We can calculate the scores using the following code</li>
 </ol>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="solution.html#cb35-1" tabindex="-1"></a><span class="co">#By hand using R as a calculator</span></span>
-<span id="cb35-2"><a href="solution.html#cb35-2" tabindex="-1"></a>centre.employ<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>center</span>
-<span id="cb35-3"><a href="solution.html#cb35-3" tabindex="-1"></a>scale.employ<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>scale</span>
-<span id="cb35-4"><a href="solution.html#cb35-4" tabindex="-1"></a>second.load<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>loadings[,<span class="dv">2</span>]</span>
-<span id="cb35-5"><a href="solution.html#cb35-5" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="solution.html#cb35-6" tabindex="-1"></a>obs1.cent<span class="ot">&lt;-</span>obs1<span class="sc">-</span>centre.employ</span>
-<span id="cb35-7"><a href="solution.html#cb35-7" tabindex="-1"></a>obs1.stand<span class="ot">&lt;-</span>obs1.cent<span class="sc">/</span>scale.employ</span>
-<span id="cb35-8"><a href="solution.html#cb35-8" tabindex="-1"></a>obs1.stand<span class="sc">%*%</span>second.load</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="solution.html#cb31-1" tabindex="-1"></a><span class="co">#By hand using R as a calculator</span></span>
+<span id="cb31-2"><a href="solution.html#cb31-2" tabindex="-1"></a>centre.employ<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>center</span>
+<span id="cb31-3"><a href="solution.html#cb31-3" tabindex="-1"></a>scale.employ<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>scale</span>
+<span id="cb31-4"><a href="solution.html#cb31-4" tabindex="-1"></a>second.load<span class="ot">&lt;-</span>employ.pca<span class="sc">$</span>loadings[,<span class="dv">2</span>]</span>
+<span id="cb31-5"><a href="solution.html#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="solution.html#cb31-6" tabindex="-1"></a>obs1.cent<span class="ot">&lt;-</span>obs1<span class="sc">-</span>centre.employ</span>
+<span id="cb31-7"><a href="solution.html#cb31-7" tabindex="-1"></a>obs1.stand<span class="ot">&lt;-</span>obs1.cent<span class="sc">/</span>scale.employ</span>
+<span id="cb31-8"><a href="solution.html#cb31-8" tabindex="-1"></a>obs1.stand<span class="sc">%*%</span>second.load</span></code></pre></div>
 <pre><code>##         [,1]
 ## [1,] -0.7608</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="solution.html#cb37-1" tabindex="-1"></a>obs2.cent<span class="ot">&lt;-</span>obs2<span class="sc">-</span>centre.employ</span>
-<span id="cb37-2"><a href="solution.html#cb37-2" tabindex="-1"></a>obs2.stand<span class="ot">&lt;-</span>obs2.cent<span class="sc">/</span>scale.employ</span>
-<span id="cb37-3"><a href="solution.html#cb37-3" tabindex="-1"></a>obs2.stand<span class="sc">%*%</span>second.load</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="solution.html#cb33-1" tabindex="-1"></a>obs2.cent<span class="ot">&lt;-</span>obs2<span class="sc">-</span>centre.employ</span>
+<span id="cb33-2"><a href="solution.html#cb33-2" tabindex="-1"></a>obs2.stand<span class="ot">&lt;-</span>obs2.cent<span class="sc">/</span>scale.employ</span>
+<span id="cb33-3"><a href="solution.html#cb33-3" tabindex="-1"></a>obs2.stand<span class="sc">%*%</span>second.load</span></code></pre></div>
 <pre><code>##        [,1]
 ## [1,] -1.373</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="solution.html#cb39-1" tabindex="-1"></a><span class="co">#Using the predict command</span></span>
-<span id="cb39-2"><a href="solution.html#cb39-2" tabindex="-1"></a>newdata<span class="ot">&lt;-</span><span class="fu">rbind</span>(obs1,obs2);<span class="fu">colnames</span>(newdata)<span class="ot">&lt;-</span><span class="fu">colnames</span>(employ)</span>
-<span id="cb39-3"><a href="solution.html#cb39-3" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(newdata);</span>
-<span id="cb39-4"><a href="solution.html#cb39-4" tabindex="-1"></a>new.data.scores<span class="ot">&lt;-</span><span class="fu">predict</span>(employ.pca,new.data)</span>
-<span id="cb39-5"><a href="solution.html#cb39-5" tabindex="-1"></a>new.data.scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="solution.html#cb35-1" tabindex="-1"></a><span class="co">#Using the predict command</span></span>
+<span id="cb35-2"><a href="solution.html#cb35-2" tabindex="-1"></a>newdata<span class="ot">&lt;-</span><span class="fu">rbind</span>(obs1,obs2);<span class="fu">colnames</span>(newdata)<span class="ot">&lt;-</span><span class="fu">colnames</span>(employ)</span>
+<span id="cb35-3"><a href="solution.html#cb35-3" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(newdata);</span>
+<span id="cb35-4"><a href="solution.html#cb35-4" tabindex="-1"></a>new.data.scores<span class="ot">&lt;-</span><span class="fu">predict</span>(employ.pca,new.data)</span>
+<span id="cb35-5"><a href="solution.html#cb35-5" tabindex="-1"></a>new.data.scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
 <pre><code>##      Comp.1  Comp.2   Comp.3   Comp.4   Comp.5   Comp.6
 ## obs1 -0.989 -0.7608 -0.01662 -0.46329 -0.80507  0.03885
 ## obs2 -1.468 -1.3729  0.70027  0.02475 -0.03189 -0.66059</code></pre>
@@ -470,31 +470,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="optional-implementing-pca-using-prcomp-1" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Optional: Implementing PCA using <code>prcomp</code><a href="solution.html#optional-implementing-pca-using-prcomp-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following code uses <code>prcomp</code> to analyse the turtle data.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="solution.html#cb41-1" tabindex="-1"></a><span class="co">#Setting the random generator seed to ensure similar responses when re-running code</span></span>
-<span id="cb41-2"><a href="solution.html#cb41-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">135</span>)</span>
-<span id="cb41-3"><a href="solution.html#cb41-3" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="solution.html#cb41-4" tabindex="-1"></a><span class="do">#############################</span></span>
-<span id="cb41-5"><a href="solution.html#cb41-5" tabindex="-1"></a><span class="co">#Principal Component Analysis</span></span>
-<span id="cb41-6"><a href="solution.html#cb41-6" tabindex="-1"></a><span class="do">#############################</span></span>
-<span id="cb41-7"><a href="solution.html#cb41-7" tabindex="-1"></a>pca.turt<span class="fl">.2</span><span class="ot">&lt;-</span><span class="fu">prcomp</span>(log.fem.turt[<span class="sc">-</span><span class="dv">10</span>,]);pca.turt<span class="fl">.2</span></span>
-<span id="cb41-8"><a href="solution.html#cb41-8" tabindex="-1"></a></span>
-<span id="cb41-9"><a href="solution.html#cb41-9" tabindex="-1"></a><span class="do">####################################</span></span>
-<span id="cb41-10"><a href="solution.html#cb41-10" tabindex="-1"></a><span class="co">#Deciding on number of PCs to retain</span></span>
-<span id="cb41-11"><a href="solution.html#cb41-11" tabindex="-1"></a><span class="do">####################################</span></span>
-<span id="cb41-12"><a href="solution.html#cb41-12" tabindex="-1"></a><span class="fu">plot</span>(pca.turt<span class="fl">.2</span>);<span class="fu">summary</span>(pca.turt<span class="fl">.2</span>)</span>
-<span id="cb41-13"><a href="solution.html#cb41-13" tabindex="-1"></a>sd.pca<span class="ot">&lt;-</span><span class="fu">summary</span>(pca.turt<span class="fl">.2</span>)<span class="sc">$</span>sdev</span>
-<span id="cb41-14"><a href="solution.html#cb41-14" tabindex="-1"></a>tot.var<span class="ot">&lt;-</span><span class="fu">sum</span>(sd.pca<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb41-15"><a href="solution.html#cb41-15" tabindex="-1"></a>ave.var<span class="ot">&lt;-</span>tot.var<span class="sc">/</span><span class="fu">ncol</span>(log.fem.turt)</span>
-<span id="cb41-16"><a href="solution.html#cb41-16" tabindex="-1"></a>ave.var</span>
-<span id="cb41-17"><a href="solution.html#cb41-17" tabindex="-1"></a>sd.pca<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span>ave.var</span>
-<span id="cb41-18"><a href="solution.html#cb41-18" tabindex="-1"></a></span>
-<span id="cb41-19"><a href="solution.html#cb41-19" tabindex="-1"></a><span class="do">#######################################IT##############</span></span>
-<span id="cb41-20"><a href="solution.html#cb41-20" tabindex="-1"></a><span class="co">#Interpreting the loadings and calculating new scores</span></span>
-<span id="cb41-21"><a href="solution.html#cb41-21" tabindex="-1"></a><span class="do">#####################################################</span></span>
-<span id="cb41-22"><a href="solution.html#cb41-22" tabindex="-1"></a>pca.turt<span class="fl">.2</span><span class="sc">$</span>rotation <span class="co">#loading matrix</span></span>
-<span id="cb41-23"><a href="solution.html#cb41-23" tabindex="-1"></a><span class="co"># pca.turt.2$x #PC scores</span></span>
-<span id="cb41-24"><a href="solution.html#cb41-24" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">log.length=</span><span class="fu">c</span>(<span class="fl">4.8</span>),<span class="at">log.width=</span><span class="fu">c</span>(<span class="fl">4.7</span>),<span class="at">log.breadth=</span><span class="fu">c</span>(<span class="fl">3.9</span>))</span>
-<span id="cb41-25"><a href="solution.html#cb41-25" tabindex="-1"></a><span class="fu">predict</span>(pca.turt<span class="fl">.2</span>,new.data)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="solution.html#cb37-1" tabindex="-1"></a><span class="co">#Setting the random generator seed to ensure similar responses when re-running code</span></span>
+<span id="cb37-2"><a href="solution.html#cb37-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">135</span>)</span>
+<span id="cb37-3"><a href="solution.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="solution.html#cb37-4" tabindex="-1"></a><span class="do">#############################</span></span>
+<span id="cb37-5"><a href="solution.html#cb37-5" tabindex="-1"></a><span class="co">#Principal Component Analysis</span></span>
+<span id="cb37-6"><a href="solution.html#cb37-6" tabindex="-1"></a><span class="do">#############################</span></span>
+<span id="cb37-7"><a href="solution.html#cb37-7" tabindex="-1"></a>pca.turt<span class="fl">.2</span><span class="ot">&lt;-</span><span class="fu">prcomp</span>(log.fem.turt[<span class="sc">-</span><span class="dv">10</span>,]);pca.turt<span class="fl">.2</span></span>
+<span id="cb37-8"><a href="solution.html#cb37-8" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="solution.html#cb37-9" tabindex="-1"></a><span class="do">####################################</span></span>
+<span id="cb37-10"><a href="solution.html#cb37-10" tabindex="-1"></a><span class="co">#Deciding on number of PCs to retain</span></span>
+<span id="cb37-11"><a href="solution.html#cb37-11" tabindex="-1"></a><span class="do">####################################</span></span>
+<span id="cb37-12"><a href="solution.html#cb37-12" tabindex="-1"></a><span class="fu">plot</span>(pca.turt<span class="fl">.2</span>);<span class="fu">summary</span>(pca.turt<span class="fl">.2</span>)</span>
+<span id="cb37-13"><a href="solution.html#cb37-13" tabindex="-1"></a>sd.pca<span class="ot">&lt;-</span><span class="fu">summary</span>(pca.turt<span class="fl">.2</span>)<span class="sc">$</span>sdev</span>
+<span id="cb37-14"><a href="solution.html#cb37-14" tabindex="-1"></a>tot.var<span class="ot">&lt;-</span><span class="fu">sum</span>(sd.pca<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb37-15"><a href="solution.html#cb37-15" tabindex="-1"></a>ave.var<span class="ot">&lt;-</span>tot.var<span class="sc">/</span><span class="fu">ncol</span>(log.fem.turt)</span>
+<span id="cb37-16"><a href="solution.html#cb37-16" tabindex="-1"></a>ave.var</span>
+<span id="cb37-17"><a href="solution.html#cb37-17" tabindex="-1"></a>sd.pca<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span>ave.var</span>
+<span id="cb37-18"><a href="solution.html#cb37-18" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="solution.html#cb37-19" tabindex="-1"></a><span class="do">#######################################IT##############</span></span>
+<span id="cb37-20"><a href="solution.html#cb37-20" tabindex="-1"></a><span class="co">#Interpreting the loadings and calculating new scores</span></span>
+<span id="cb37-21"><a href="solution.html#cb37-21" tabindex="-1"></a><span class="do">#####################################################</span></span>
+<span id="cb37-22"><a href="solution.html#cb37-22" tabindex="-1"></a>pca.turt<span class="fl">.2</span><span class="sc">$</span>rotation <span class="co">#loading matrix</span></span>
+<span id="cb37-23"><a href="solution.html#cb37-23" tabindex="-1"></a><span class="co"># pca.turt.2$x #PC scores</span></span>
+<span id="cb37-24"><a href="solution.html#cb37-24" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">log.length=</span><span class="fu">c</span>(<span class="fl">4.8</span>),<span class="at">log.width=</span><span class="fu">c</span>(<span class="fl">4.7</span>),<span class="at">log.breadth=</span><span class="fu">c</span>(<span class="fl">3.9</span>))</span>
+<span id="cb37-25"><a href="solution.html#cb37-25" tabindex="-1"></a><span class="fu">predict</span>(pca.turt<span class="fl">.2</span>,new.data)</span></code></pre></div>
 <p>The PCA results using <code>princomp</code> and <code>prcomp</code> are not <em>too</em> different.</p>
 
 </div>

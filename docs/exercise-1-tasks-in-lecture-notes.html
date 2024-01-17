@@ -184,6 +184,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Answer: <input class='webex-solveme nospaces' size='1' data-answer='["5"]'/> components</p>
 <p>What about 95%?</p>
 <p>Answer: <input class='webex-solveme nospaces' size='2' data-answer='["10"]'/> components</p>
+<div class="webex-solution">
+<button>
+Hint
+</button>
+<p>Look at the row "Cumulative Proportion" and find the column whose value is larger than the required proportion of variance explained.</p>
+</div>
 <p><strong>Task 3</strong></p>
 <p>Some social scientists use Joliffe’s rule, which says that for a PCA run on correlation, only those PCs with variation above 0.6 should be retained. How many PCs should be retained according to this rule?</p>
 <p>Answer: <input class='webex-solveme nospaces' size='1' data-answer='["6"]'/> components</p>
@@ -193,45 +199,8 @@ Hint
 </button>
 <p>Use <code>wine.pca$sdev</code> to find the standard deviation and thus the variance of each PC.</p>
 </div>
-<div class="webex-solution">
-<button>
-Solution
-</button>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="exercise-1-tasks-in-lecture-notes.html#cb5-1" tabindex="-1"></a>wine.pca<span class="sc">$</span>sdevˆ2<span class="sc">&gt;</span><span class="fl">0.6</span></span></code></pre></div>
-<pre><code>## logical(0)</code></pre>
-<p>Since there are six TRUE values, we select six components.</p>
-</div>
 <p><strong>Task 4</strong></p>
 <p>Looking at the loadings of the PCA, how would you interpret the third principal component?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exercise-1-tasks-in-lecture-notes.html#cb7-1" tabindex="-1"></a>wine.pca<span class="sc">$</span>loadings[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
-<pre><code>##                                 Comp.1    Comp.2   Comp.3   Comp.4   Comp.5
-## Alcohol                       0.149123  0.485556  0.17408  0.00929  0.26593
-## Malic.acid                   -0.242464  0.223444 -0.08787 -0.54066 -0.05604
-## Ash                          -0.009586  0.328329 -0.64011  0.19465  0.13900
-## Alcalinity.of.ash            -0.250346 -0.008123 -0.61163 -0.08379 -0.08371
-## Magnesium                     0.138690  0.299087 -0.11172  0.36727 -0.72230
-## Total.phenols                 0.391801  0.063886 -0.13714 -0.20548  0.13876
-## Flavanoids                    0.426727 -0.005372 -0.11225 -0.15767  0.10673
-## Nonflavanoid.phenols         -0.298883  0.030423 -0.15663  0.18327  0.50009
-## Proanthocyanins               0.309978  0.037335 -0.15316 -0.39981 -0.15844
-## Colour.intensity             -0.087566  0.524727  0.17888 -0.06641  0.07869
-## Hue                           0.293857 -0.275287 -0.13046  0.41916  0.17838
-## OD280.OD315.of.diluted.wines  0.373092 -0.164999 -0.16727 -0.18860  0.09167
-## Proline                       0.287636  0.363612  0.09622  0.22719  0.16078
-##                                Comp.6
-## Alcohol                       0.20679
-## Malic.acid                    0.51623
-## Ash                           0.14176
-## Alcalinity.of.ash            -0.12554
-## Magnesium                     0.02747
-## Total.phenols                -0.08552
-## Flavanoids                   -0.00640
-## Nonflavanoid.phenols         -0.27710
-## Proanthocyanins              -0.56662
-## Colour.intensity             -0.39917
-## Hue                           0.08101
-## OD280.OD315.of.diluted.wines  0.26711
-## Proline                       0.10810</code></pre>
 <p><strong>Task 5</strong></p>
 <ol style="list-style-type: lower-roman">
 <li>Calculate the first component score for the new observation <span class="math inline">\((12,4,3,25,100,2,1,0.4,2,4,1,2,600)\)</span> by hand (using R as a calculator)</li>

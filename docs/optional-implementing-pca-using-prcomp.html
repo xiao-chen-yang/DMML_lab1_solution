@@ -166,83 +166,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="optional-implementing-pca-using-prcomp" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Optional: Implementing PCA using <code>prcomp</code><a href="optional-implementing-pca-using-prcomp.html#optional-implementing-pca-using-prcomp" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The following code will produce the PCA output given in the tortues videos in the lecture. Try re-running the code using <code>prcomp</code> instead of <code>princomp</code>. (Just start with the data with the outlier removed)</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="optional-implementing-pca-using-prcomp.html#cb12-1" tabindex="-1"></a><span class="co">#Setting the random generator seed to ensure similar responses when re-running code</span></span>
-<span id="cb12-2"><a href="optional-implementing-pca-using-prcomp.html#cb12-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">135</span>)</span>
-<span id="cb12-3"><a href="optional-implementing-pca-using-prcomp.html#cb12-3" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="optional-implementing-pca-using-prcomp.html#cb12-4" tabindex="-1"></a><span class="do">##################################</span></span>
-<span id="cb12-5"><a href="optional-implementing-pca-using-prcomp.html#cb12-5" tabindex="-1"></a><span class="co">#Reading in and preparing the data</span></span>
-<span id="cb12-6"><a href="optional-implementing-pca-using-prcomp.html#cb12-6" tabindex="-1"></a><span class="do">##################################</span></span>
-<span id="cb12-7"><a href="optional-implementing-pca-using-prcomp.html#cb12-7" tabindex="-1"></a><span class="co">#Open the library ade4 where the data is</span></span>
-<span id="cb12-8"><a href="optional-implementing-pca-using-prcomp.html#cb12-8" tabindex="-1"></a><span class="fu">library</span>(ade4)</span>
-<span id="cb12-9"><a href="optional-implementing-pca-using-prcomp.html#cb12-9" tabindex="-1"></a><span class="co">#Load the tortues dataset</span></span>
-<span id="cb12-10"><a href="optional-implementing-pca-using-prcomp.html#cb12-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tortues&quot;</span>)</span>
-<span id="cb12-11"><a href="optional-implementing-pca-using-prcomp.html#cb12-11" tabindex="-1"></a><span class="co">#Look at the first few lines of the data</span></span>
-<span id="cb12-12"><a href="optional-implementing-pca-using-prcomp.html#cb12-12" tabindex="-1"></a><span class="fu">head</span>(tortues)</span>
-<span id="cb12-13"><a href="optional-implementing-pca-using-prcomp.html#cb12-13" tabindex="-1"></a><span class="co">#Extract the females turtles data into a new dataset called fem.turt</span></span>
-<span id="cb12-14"><a href="optional-implementing-pca-using-prcomp.html#cb12-14" tabindex="-1"></a>fem.turt<span class="ot">&lt;-</span>tortues[tortues[,<span class="dv">4</span>]<span class="sc">==</span><span class="st">&quot;F&quot;</span>,<span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb12-15"><a href="optional-implementing-pca-using-prcomp.html#cb12-15" tabindex="-1"></a><span class="co">#Take the log of all the variables in the new dataset</span></span>
-<span id="cb12-16"><a href="optional-implementing-pca-using-prcomp.html#cb12-16" tabindex="-1"></a>log.fem.turt<span class="ot">&lt;-</span><span class="fu">log</span>(fem.turt)</span>
-<span id="cb12-17"><a href="optional-implementing-pca-using-prcomp.html#cb12-17" tabindex="-1"></a><span class="co">#Name the variables</span></span>
-<span id="cb12-18"><a href="optional-implementing-pca-using-prcomp.html#cb12-18" tabindex="-1"></a><span class="fu">colnames</span>(log.fem.turt)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;log.length&quot;</span>,<span class="st">&quot;log.width&quot;</span>, <span class="st">&quot;log.breadth&quot;</span>)</span>
-<span id="cb12-19"><a href="optional-implementing-pca-using-prcomp.html#cb12-19" tabindex="-1"></a></span>
-<span id="cb12-20"><a href="optional-implementing-pca-using-prcomp.html#cb12-20" tabindex="-1"></a><span class="do">##############</span></span>
-<span id="cb12-21"><a href="optional-implementing-pca-using-prcomp.html#cb12-21" tabindex="-1"></a><span class="co">#Summary Plots</span></span>
-<span id="cb12-22"><a href="optional-implementing-pca-using-prcomp.html#cb12-22" tabindex="-1"></a><span class="do">##############</span></span>
-<span id="cb12-23"><a href="optional-implementing-pca-using-prcomp.html#cb12-23" tabindex="-1"></a><span class="co">#Create a pairsplot of the data</span></span>
-<span id="cb12-24"><a href="optional-implementing-pca-using-prcomp.html#cb12-24" tabindex="-1"></a><span class="fu">pairs</span>(log.fem.turt,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">lower.panel=</span><span class="cn">NULL</span>)</span>
-<span id="cb12-25"><a href="optional-implementing-pca-using-prcomp.html#cb12-25" tabindex="-1"></a><span class="co">#Create a 3-d scatterplot of the data</span></span>
-<span id="cb12-26"><a href="optional-implementing-pca-using-prcomp.html#cb12-26" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
-<span id="cb12-27"><a href="optional-implementing-pca-using-prcomp.html#cb12-27" tabindex="-1"></a><span class="fu">cloud</span>(log.length<span class="sc">~</span>log.width<span class="sc">*</span>log.breadth,<span class="at">data=</span>log.fem.turt)</span>
-<span id="cb12-28"><a href="optional-implementing-pca-using-prcomp.html#cb12-28" tabindex="-1"></a><span class="co">#Rotate the 3-d scatterplot of the data</span></span>
-<span id="cb12-29"><a href="optional-implementing-pca-using-prcomp.html#cb12-29" tabindex="-1"></a><span class="fu">library</span>(TeachingDemos)</span>
-<span id="cb12-30"><a href="optional-implementing-pca-using-prcomp.html#cb12-30" tabindex="-1"></a><span class="co">#Use your mouse to drag the sliders to change the plot</span></span>
-<span id="cb12-31"><a href="optional-implementing-pca-using-prcomp.html#cb12-31" tabindex="-1"></a><span class="fu">rotate.cloud</span>(log.length<span class="sc">~</span>log.width<span class="sc">*</span>log.breadth,<span class="at">data=</span>log.fem.turt)</span>
-<span id="cb12-32"><a href="optional-implementing-pca-using-prcomp.html#cb12-32" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="optional-implementing-pca-using-prcomp.html#cb12-33" tabindex="-1"></a><span class="do">####################</span></span>
-<span id="cb12-34"><a href="optional-implementing-pca-using-prcomp.html#cb12-34" tabindex="-1"></a><span class="co">#Numerical Summaries</span></span>
-<span id="cb12-35"><a href="optional-implementing-pca-using-prcomp.html#cb12-35" tabindex="-1"></a><span class="do">####################</span></span>
-<span id="cb12-36"><a href="optional-implementing-pca-using-prcomp.html#cb12-36" tabindex="-1"></a><span class="co">#Correlation matrix</span></span>
-<span id="cb12-37"><a href="optional-implementing-pca-using-prcomp.html#cb12-37" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(log.fem.turt),<span class="dv">2</span>)</span>
-<span id="cb12-38"><a href="optional-implementing-pca-using-prcomp.html#cb12-38" tabindex="-1"></a><span class="co">#Standard deviations</span></span>
-<span id="cb12-39"><a href="optional-implementing-pca-using-prcomp.html#cb12-39" tabindex="-1"></a><span class="fu">apply</span>(log.fem.turt,<span class="dv">2</span>,sd)</span>
-<span id="cb12-40"><a href="optional-implementing-pca-using-prcomp.html#cb12-40" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="optional-implementing-pca-using-prcomp.html#cb12-41" tabindex="-1"></a><span class="do">#############################</span></span>
-<span id="cb12-42"><a href="optional-implementing-pca-using-prcomp.html#cb12-42" tabindex="-1"></a><span class="co">#Principal Component Analysis</span></span>
-<span id="cb12-43"><a href="optional-implementing-pca-using-prcomp.html#cb12-43" tabindex="-1"></a><span class="do">#############################</span></span>
-<span id="cb12-44"><a href="optional-implementing-pca-using-prcomp.html#cb12-44" tabindex="-1"></a>pca.turt<span class="ot">&lt;-</span><span class="fu">princomp</span>(log.fem.turt);pca.turt</span>
-<span id="cb12-45"><a href="optional-implementing-pca-using-prcomp.html#cb12-45" tabindex="-1"></a><span class="co">#Change princomp to prcomp and use the help page to find out loadings, scores etc.</span></span>
-<span id="cb12-46"><a href="optional-implementing-pca-using-prcomp.html#cb12-46" tabindex="-1"></a></span>
-<span id="cb12-47"><a href="optional-implementing-pca-using-prcomp.html#cb12-47" tabindex="-1"></a><span class="do">######################</span></span>
-<span id="cb12-48"><a href="optional-implementing-pca-using-prcomp.html#cb12-48" tabindex="-1"></a><span class="co">#Looking at the scores</span></span>
-<span id="cb12-49"><a href="optional-implementing-pca-using-prcomp.html#cb12-49" tabindex="-1"></a><span class="do">######################</span></span>
-<span id="cb12-50"><a href="optional-implementing-pca-using-prcomp.html#cb12-50" tabindex="-1"></a><span class="fu">head</span>(pca.turt<span class="sc">$</span>scores);<span class="fu">plot</span>(pca.turt<span class="sc">$</span>scores,<span class="at">pch=</span><span class="dv">20</span>)</span>
-<span id="cb12-51"><a href="optional-implementing-pca-using-prcomp.html#cb12-51" tabindex="-1"></a><span class="co">#outlier&lt;-identify(pca.turt$scores)</span></span>
-<span id="cb12-52"><a href="optional-implementing-pca-using-prcomp.html#cb12-52" tabindex="-1"></a></span>
-<span id="cb12-53"><a href="optional-implementing-pca-using-prcomp.html#cb12-53" tabindex="-1"></a><span class="do">#####################################</span></span>
-<span id="cb12-54"><a href="optional-implementing-pca-using-prcomp.html#cb12-54" tabindex="-1"></a><span class="co">#Run PCA on dataset excluding outlier</span></span>
-<span id="cb12-55"><a href="optional-implementing-pca-using-prcomp.html#cb12-55" tabindex="-1"></a><span class="do">#####################################</span></span>
-<span id="cb12-56"><a href="optional-implementing-pca-using-prcomp.html#cb12-56" tabindex="-1"></a>pca.turt.new<span class="ot">&lt;-</span><span class="fu">princomp</span>(log.fem.turt[<span class="sc">-</span><span class="dv">10</span>,]);pca.turt.new</span>
-<span id="cb12-57"><a href="optional-implementing-pca-using-prcomp.html#cb12-57" tabindex="-1"></a></span>
-<span id="cb12-58"><a href="optional-implementing-pca-using-prcomp.html#cb12-58" tabindex="-1"></a><span class="do">####################################</span></span>
-<span id="cb12-59"><a href="optional-implementing-pca-using-prcomp.html#cb12-59" tabindex="-1"></a><span class="co">#Deciding on number of PCs to retain</span></span>
-<span id="cb12-60"><a href="optional-implementing-pca-using-prcomp.html#cb12-60" tabindex="-1"></a><span class="do">####################################</span></span>
-<span id="cb12-61"><a href="optional-implementing-pca-using-prcomp.html#cb12-61" tabindex="-1"></a><span class="fu">plot</span>(pca.turt.new);<span class="fu">summary</span>(pca.turt.new)</span>
-<span id="cb12-62"><a href="optional-implementing-pca-using-prcomp.html#cb12-62" tabindex="-1"></a>sd.pca<span class="ot">&lt;-</span><span class="fu">summary</span>(pca.turt.new)<span class="sc">$</span>sdev</span>
-<span id="cb12-63"><a href="optional-implementing-pca-using-prcomp.html#cb12-63" tabindex="-1"></a>tot.var<span class="ot">&lt;-</span><span class="fu">sum</span>(sd.pca<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb12-64"><a href="optional-implementing-pca-using-prcomp.html#cb12-64" tabindex="-1"></a>ave.var<span class="ot">&lt;-</span>tot.var<span class="sc">/</span><span class="fu">ncol</span>(log.fem.turt)</span>
-<span id="cb12-65"><a href="optional-implementing-pca-using-prcomp.html#cb12-65" tabindex="-1"></a>ave.var</span>
-<span id="cb12-66"><a href="optional-implementing-pca-using-prcomp.html#cb12-66" tabindex="-1"></a>sd.pca<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span>ave.var</span>
-<span id="cb12-67"><a href="optional-implementing-pca-using-prcomp.html#cb12-67" tabindex="-1"></a></span>
-<span id="cb12-68"><a href="optional-implementing-pca-using-prcomp.html#cb12-68" tabindex="-1"></a><span class="do">##########################</span></span>
-<span id="cb12-69"><a href="optional-implementing-pca-using-prcomp.html#cb12-69" tabindex="-1"></a><span class="co">#Interpreting the loadings</span></span>
-<span id="cb12-70"><a href="optional-implementing-pca-using-prcomp.html#cb12-70" tabindex="-1"></a><span class="do">##########################</span></span>
-<span id="cb12-71"><a href="optional-implementing-pca-using-prcomp.html#cb12-71" tabindex="-1"></a>pca.turt.new<span class="sc">$</span>loadings</span>
-<span id="cb12-72"><a href="optional-implementing-pca-using-prcomp.html#cb12-72" tabindex="-1"></a></span>
-<span id="cb12-73"><a href="optional-implementing-pca-using-prcomp.html#cb12-73" tabindex="-1"></a><span class="do">#######################</span></span>
-<span id="cb12-74"><a href="optional-implementing-pca-using-prcomp.html#cb12-74" tabindex="-1"></a><span class="co">#Calculating new scores</span></span>
-<span id="cb12-75"><a href="optional-implementing-pca-using-prcomp.html#cb12-75" tabindex="-1"></a><span class="do">#######################</span></span>
-<span id="cb12-76"><a href="optional-implementing-pca-using-prcomp.html#cb12-76" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">log.length=</span><span class="fu">c</span>(<span class="fl">4.8</span>),<span class="at">log.width=</span><span class="fu">c</span>(<span class="fl">4.7</span>),<span class="at">log.breadth=</span><span class="fu">c</span>(<span class="fl">3.9</span>))</span>
-<span id="cb12-77"><a href="optional-implementing-pca-using-prcomp.html#cb12-77" tabindex="-1"></a><span class="fu">predict</span>(pca.turt.new,new.data)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="optional-implementing-pca-using-prcomp.html#cb8-1" tabindex="-1"></a><span class="co">#Setting the random generator seed to ensure similar responses when re-running code</span></span>
+<span id="cb8-2"><a href="optional-implementing-pca-using-prcomp.html#cb8-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">135</span>)</span>
+<span id="cb8-3"><a href="optional-implementing-pca-using-prcomp.html#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="optional-implementing-pca-using-prcomp.html#cb8-4" tabindex="-1"></a><span class="do">##################################</span></span>
+<span id="cb8-5"><a href="optional-implementing-pca-using-prcomp.html#cb8-5" tabindex="-1"></a><span class="co">#Reading in and preparing the data</span></span>
+<span id="cb8-6"><a href="optional-implementing-pca-using-prcomp.html#cb8-6" tabindex="-1"></a><span class="do">##################################</span></span>
+<span id="cb8-7"><a href="optional-implementing-pca-using-prcomp.html#cb8-7" tabindex="-1"></a><span class="co">#Open the library ade4 where the data is</span></span>
+<span id="cb8-8"><a href="optional-implementing-pca-using-prcomp.html#cb8-8" tabindex="-1"></a><span class="fu">library</span>(ade4)</span>
+<span id="cb8-9"><a href="optional-implementing-pca-using-prcomp.html#cb8-9" tabindex="-1"></a><span class="co">#Load the tortues dataset</span></span>
+<span id="cb8-10"><a href="optional-implementing-pca-using-prcomp.html#cb8-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tortues&quot;</span>)</span>
+<span id="cb8-11"><a href="optional-implementing-pca-using-prcomp.html#cb8-11" tabindex="-1"></a><span class="co">#Look at the first few lines of the data</span></span>
+<span id="cb8-12"><a href="optional-implementing-pca-using-prcomp.html#cb8-12" tabindex="-1"></a><span class="fu">head</span>(tortues)</span>
+<span id="cb8-13"><a href="optional-implementing-pca-using-prcomp.html#cb8-13" tabindex="-1"></a><span class="co">#Extract the females turtles data into a new dataset called fem.turt</span></span>
+<span id="cb8-14"><a href="optional-implementing-pca-using-prcomp.html#cb8-14" tabindex="-1"></a>fem.turt<span class="ot">&lt;-</span>tortues[tortues[,<span class="dv">4</span>]<span class="sc">==</span><span class="st">&quot;F&quot;</span>,<span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb8-15"><a href="optional-implementing-pca-using-prcomp.html#cb8-15" tabindex="-1"></a><span class="co">#Take the log of all the variables in the new dataset</span></span>
+<span id="cb8-16"><a href="optional-implementing-pca-using-prcomp.html#cb8-16" tabindex="-1"></a>log.fem.turt<span class="ot">&lt;-</span><span class="fu">log</span>(fem.turt)</span>
+<span id="cb8-17"><a href="optional-implementing-pca-using-prcomp.html#cb8-17" tabindex="-1"></a><span class="co">#Name the variables</span></span>
+<span id="cb8-18"><a href="optional-implementing-pca-using-prcomp.html#cb8-18" tabindex="-1"></a><span class="fu">colnames</span>(log.fem.turt)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;log.length&quot;</span>,<span class="st">&quot;log.width&quot;</span>, <span class="st">&quot;log.breadth&quot;</span>)</span>
+<span id="cb8-19"><a href="optional-implementing-pca-using-prcomp.html#cb8-19" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="optional-implementing-pca-using-prcomp.html#cb8-20" tabindex="-1"></a><span class="do">##############</span></span>
+<span id="cb8-21"><a href="optional-implementing-pca-using-prcomp.html#cb8-21" tabindex="-1"></a><span class="co">#Summary Plots</span></span>
+<span id="cb8-22"><a href="optional-implementing-pca-using-prcomp.html#cb8-22" tabindex="-1"></a><span class="do">##############</span></span>
+<span id="cb8-23"><a href="optional-implementing-pca-using-prcomp.html#cb8-23" tabindex="-1"></a><span class="co">#Create a pairsplot of the data</span></span>
+<span id="cb8-24"><a href="optional-implementing-pca-using-prcomp.html#cb8-24" tabindex="-1"></a><span class="fu">pairs</span>(log.fem.turt,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">lower.panel=</span><span class="cn">NULL</span>)</span>
+<span id="cb8-25"><a href="optional-implementing-pca-using-prcomp.html#cb8-25" tabindex="-1"></a><span class="co">#Create a 3-d scatterplot of the data</span></span>
+<span id="cb8-26"><a href="optional-implementing-pca-using-prcomp.html#cb8-26" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb8-27"><a href="optional-implementing-pca-using-prcomp.html#cb8-27" tabindex="-1"></a><span class="fu">cloud</span>(log.length<span class="sc">~</span>log.width<span class="sc">*</span>log.breadth,<span class="at">data=</span>log.fem.turt)</span>
+<span id="cb8-28"><a href="optional-implementing-pca-using-prcomp.html#cb8-28" tabindex="-1"></a><span class="co">#Rotate the 3-d scatterplot of the data</span></span>
+<span id="cb8-29"><a href="optional-implementing-pca-using-prcomp.html#cb8-29" tabindex="-1"></a><span class="fu">library</span>(TeachingDemos)</span>
+<span id="cb8-30"><a href="optional-implementing-pca-using-prcomp.html#cb8-30" tabindex="-1"></a><span class="co">#Use your mouse to drag the sliders to change the plot</span></span>
+<span id="cb8-31"><a href="optional-implementing-pca-using-prcomp.html#cb8-31" tabindex="-1"></a><span class="fu">rotate.cloud</span>(log.length<span class="sc">~</span>log.width<span class="sc">*</span>log.breadth,<span class="at">data=</span>log.fem.turt)</span>
+<span id="cb8-32"><a href="optional-implementing-pca-using-prcomp.html#cb8-32" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="optional-implementing-pca-using-prcomp.html#cb8-33" tabindex="-1"></a><span class="do">####################</span></span>
+<span id="cb8-34"><a href="optional-implementing-pca-using-prcomp.html#cb8-34" tabindex="-1"></a><span class="co">#Numerical Summaries</span></span>
+<span id="cb8-35"><a href="optional-implementing-pca-using-prcomp.html#cb8-35" tabindex="-1"></a><span class="do">####################</span></span>
+<span id="cb8-36"><a href="optional-implementing-pca-using-prcomp.html#cb8-36" tabindex="-1"></a><span class="co">#Correlation matrix</span></span>
+<span id="cb8-37"><a href="optional-implementing-pca-using-prcomp.html#cb8-37" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(log.fem.turt),<span class="dv">2</span>)</span>
+<span id="cb8-38"><a href="optional-implementing-pca-using-prcomp.html#cb8-38" tabindex="-1"></a><span class="co">#Standard deviations</span></span>
+<span id="cb8-39"><a href="optional-implementing-pca-using-prcomp.html#cb8-39" tabindex="-1"></a><span class="fu">apply</span>(log.fem.turt,<span class="dv">2</span>,sd)</span>
+<span id="cb8-40"><a href="optional-implementing-pca-using-prcomp.html#cb8-40" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="optional-implementing-pca-using-prcomp.html#cb8-41" tabindex="-1"></a><span class="do">#############################</span></span>
+<span id="cb8-42"><a href="optional-implementing-pca-using-prcomp.html#cb8-42" tabindex="-1"></a><span class="co">#Principal Component Analysis</span></span>
+<span id="cb8-43"><a href="optional-implementing-pca-using-prcomp.html#cb8-43" tabindex="-1"></a><span class="do">#############################</span></span>
+<span id="cb8-44"><a href="optional-implementing-pca-using-prcomp.html#cb8-44" tabindex="-1"></a>pca.turt<span class="ot">&lt;-</span><span class="fu">princomp</span>(log.fem.turt);pca.turt</span>
+<span id="cb8-45"><a href="optional-implementing-pca-using-prcomp.html#cb8-45" tabindex="-1"></a><span class="co">#Change princomp to prcomp and use the help page to find out loadings, scores etc.</span></span>
+<span id="cb8-46"><a href="optional-implementing-pca-using-prcomp.html#cb8-46" tabindex="-1"></a></span>
+<span id="cb8-47"><a href="optional-implementing-pca-using-prcomp.html#cb8-47" tabindex="-1"></a><span class="do">######################</span></span>
+<span id="cb8-48"><a href="optional-implementing-pca-using-prcomp.html#cb8-48" tabindex="-1"></a><span class="co">#Looking at the scores</span></span>
+<span id="cb8-49"><a href="optional-implementing-pca-using-prcomp.html#cb8-49" tabindex="-1"></a><span class="do">######################</span></span>
+<span id="cb8-50"><a href="optional-implementing-pca-using-prcomp.html#cb8-50" tabindex="-1"></a><span class="fu">head</span>(pca.turt<span class="sc">$</span>scores);<span class="fu">plot</span>(pca.turt<span class="sc">$</span>scores,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb8-51"><a href="optional-implementing-pca-using-prcomp.html#cb8-51" tabindex="-1"></a><span class="co">#outlier&lt;-identify(pca.turt$scores)</span></span>
+<span id="cb8-52"><a href="optional-implementing-pca-using-prcomp.html#cb8-52" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="optional-implementing-pca-using-prcomp.html#cb8-53" tabindex="-1"></a><span class="do">#####################################</span></span>
+<span id="cb8-54"><a href="optional-implementing-pca-using-prcomp.html#cb8-54" tabindex="-1"></a><span class="co">#Run PCA on dataset excluding outlier</span></span>
+<span id="cb8-55"><a href="optional-implementing-pca-using-prcomp.html#cb8-55" tabindex="-1"></a><span class="do">#####################################</span></span>
+<span id="cb8-56"><a href="optional-implementing-pca-using-prcomp.html#cb8-56" tabindex="-1"></a>pca.turt.new<span class="ot">&lt;-</span><span class="fu">princomp</span>(log.fem.turt[<span class="sc">-</span><span class="dv">10</span>,]);pca.turt.new</span>
+<span id="cb8-57"><a href="optional-implementing-pca-using-prcomp.html#cb8-57" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="optional-implementing-pca-using-prcomp.html#cb8-58" tabindex="-1"></a><span class="do">####################################</span></span>
+<span id="cb8-59"><a href="optional-implementing-pca-using-prcomp.html#cb8-59" tabindex="-1"></a><span class="co">#Deciding on number of PCs to retain</span></span>
+<span id="cb8-60"><a href="optional-implementing-pca-using-prcomp.html#cb8-60" tabindex="-1"></a><span class="do">####################################</span></span>
+<span id="cb8-61"><a href="optional-implementing-pca-using-prcomp.html#cb8-61" tabindex="-1"></a><span class="fu">plot</span>(pca.turt.new);<span class="fu">summary</span>(pca.turt.new)</span>
+<span id="cb8-62"><a href="optional-implementing-pca-using-prcomp.html#cb8-62" tabindex="-1"></a>sd.pca<span class="ot">&lt;-</span><span class="fu">summary</span>(pca.turt.new)<span class="sc">$</span>sdev</span>
+<span id="cb8-63"><a href="optional-implementing-pca-using-prcomp.html#cb8-63" tabindex="-1"></a>tot.var<span class="ot">&lt;-</span><span class="fu">sum</span>(sd.pca<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-64"><a href="optional-implementing-pca-using-prcomp.html#cb8-64" tabindex="-1"></a>ave.var<span class="ot">&lt;-</span>tot.var<span class="sc">/</span><span class="fu">ncol</span>(log.fem.turt)</span>
+<span id="cb8-65"><a href="optional-implementing-pca-using-prcomp.html#cb8-65" tabindex="-1"></a>ave.var</span>
+<span id="cb8-66"><a href="optional-implementing-pca-using-prcomp.html#cb8-66" tabindex="-1"></a>sd.pca<span class="sc">^</span><span class="dv">2</span><span class="sc">&gt;</span>ave.var</span>
+<span id="cb8-67"><a href="optional-implementing-pca-using-prcomp.html#cb8-67" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="optional-implementing-pca-using-prcomp.html#cb8-68" tabindex="-1"></a><span class="do">##########################</span></span>
+<span id="cb8-69"><a href="optional-implementing-pca-using-prcomp.html#cb8-69" tabindex="-1"></a><span class="co">#Interpreting the loadings</span></span>
+<span id="cb8-70"><a href="optional-implementing-pca-using-prcomp.html#cb8-70" tabindex="-1"></a><span class="do">##########################</span></span>
+<span id="cb8-71"><a href="optional-implementing-pca-using-prcomp.html#cb8-71" tabindex="-1"></a>pca.turt.new<span class="sc">$</span>loadings</span>
+<span id="cb8-72"><a href="optional-implementing-pca-using-prcomp.html#cb8-72" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="optional-implementing-pca-using-prcomp.html#cb8-73" tabindex="-1"></a><span class="do">#######################</span></span>
+<span id="cb8-74"><a href="optional-implementing-pca-using-prcomp.html#cb8-74" tabindex="-1"></a><span class="co">#Calculating new scores</span></span>
+<span id="cb8-75"><a href="optional-implementing-pca-using-prcomp.html#cb8-75" tabindex="-1"></a><span class="do">#######################</span></span>
+<span id="cb8-76"><a href="optional-implementing-pca-using-prcomp.html#cb8-76" tabindex="-1"></a>new.data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">log.length=</span><span class="fu">c</span>(<span class="fl">4.8</span>),<span class="at">log.width=</span><span class="fu">c</span>(<span class="fl">4.7</span>),<span class="at">log.breadth=</span><span class="fu">c</span>(<span class="fl">3.9</span>))</span>
+<span id="cb8-77"><a href="optional-implementing-pca-using-prcomp.html#cb8-77" tabindex="-1"></a><span class="fu">predict</span>(pca.turt.new,new.data)</span></code></pre></div>
 <div class="webex-solution">
 <button>
 Hint
